@@ -1,15 +1,22 @@
 <template lang="html">
-    <div id="app">
+    <!-- <div :class="$style.app"> -->
+    <div :class="$style.app">
         this is content!
+        <Test />
     </div>
 </template>
 
 <script>
-export default {}
+import Test from './components/Test.vue'
+export default {
+    components: {
+        Test
+    }
+}
 </script>
 
-<style lang="css" scoped>
-#app{
-    color:red;
+<style lang="scss" scoped module>
+.app {
+    color: green;
 }
 </style>
