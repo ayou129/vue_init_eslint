@@ -152,6 +152,12 @@ module.exports = (env, argv) => {
                 {
                     test: /\.js$/,
                     loader: 'babel-loader',
+                    options: {
+                        "babelrc": false, // 不采用.babelrc的配置,懒加载必须需要添加
+                        "plugins": [
+                            "dynamic-import-webpack"
+                        ]
+                    },
                     //排除node_modules
                     exclude: file => (
                         /node_modules/.test(file) &&
