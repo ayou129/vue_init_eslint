@@ -133,22 +133,24 @@ module.exports = (env, argv) => {
                     use: [{
                             loader: devMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
                         },
-                        'css-loader?sourceMap&modules!px2rem-loader?remUnit=75&remPrecision=8!sass-loader'
+                        // 'css-loader?sourceMap&modules!px2rem-loader?remUnit=75&remPrecision=8!sass-loader'
+                        'css-loader?sourceMap&modules!sass-loader'
                     ],
                     exclude: [
                         path.resolve(__dirname, 'node_modules'),
-                    ],
+                    ]
                 },
                 {
                     test: /\.css$/,
                     use: [{
                             loader: devMode ? 'vue-style-loader' : MiniCssExtractPlugin.loader,
                         },
-                        'css-loader?sourceMap&modules!px2rem-loader?remUnit=75&remPrecision=8'
+                        // 'css-loader?sourceMap&modules!px2rem-loader?remUnit=75&remPrecision=8'
+                        'css-loader?sourceMap&modules'
                     ],
                     exclude: [
                         path.resolve(__dirname, 'node_modules'),
-                    ],
+                    ]
                 },
                 {
                     test: /\.js$/,
