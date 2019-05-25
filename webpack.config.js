@@ -21,13 +21,8 @@ module.exports = (env, argv) => {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "src/views/index.html"),
             cdnModule: 'vue',
-        }),
-        //提取css到某个文件，下方rules是操控的地方
-        new MiniCssExtractPlugin({
-            filename: devMode ? 'static/css/[name].min.css' : 'static/css/[hash].min.css',
-            //     chunkFilename: devMode ? 'static/js/[name]_chunk.min.css' : 'static/js/[hash]_chunk.min.css',
-        }),
-        new BundleAnalyzerPlugin()
+            title: "Vue Pages",
+        })
     ];
     let optimization = {
         //这里处理重复的代码块，是否过滤，后期研究
@@ -69,7 +64,13 @@ module.exports = (env, argv) => {
                 cleanOnceBeforeBuildPatterns: "dist/*.*",
                 verbose: true, //开启在控制台输出信息
                 // dry: true //启用删除文件
-            })
+            }),
+            //提取css到某个文件，下方rules是操控的地方
+            new MiniCssExtractPlugin({
+                filename: devMode ? 'static/css/[name].min.css' : 'static/css/[hash].min.css',
+                //     chunkFilename: devMode ? 'static/js/[name]_chunk.min.css' : 'static/js/[hash]_chunk.min.css',
+            }),
+            new BundleAnalyzerPlugin()
         )
         //production 压缩js
         optimization.minimizer.push(
@@ -95,7 +96,7 @@ module.exports = (env, argv) => {
     }
     return {
         mode: devMode ? 'development' : 'production',
-        devtool: 'source-map',
+        devtool: devMode ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
         entry: {
             app: path.resolve(__dirname, "src/app.js")
             // web: path.resolve(__dirname, "src/web.js")
