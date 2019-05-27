@@ -27,14 +27,6 @@ module.exports = (env, argv) => {
     let optimization = {
         //这里处理重复的代码块，是否过滤，后期研究
         splitChunks: {
-            // include all types of chunks
-            // name: devMode ? "static/js/.chunk.js" : "static/js/[hash].chunk.js",
-            // name(module, chunks, cacheGroupKey) {
-            //     // generate a chunk name...
-            //     console.log(module, chunks, cacheGroupKey)
-            //     return; //...
-            // },
-            // chunks: 'all' //全部收入，可以选择 按需收块,
             chunks: 'async',
             minSize: 30000,
             maxSize: 0,
@@ -72,23 +64,25 @@ module.exports = (env, argv) => {
             }),
             new BundleAnalyzerPlugin()
         )
-        //production 压缩js
+        //production
         optimization.minimizer.push(
+            //压缩js
             new TerserJSPlugin({
-                cache: true,
                 parallel: true,
                 sourceMap: true
             }),
+            //压缩css
             new OptimizeCSSAssetsPlugin({
-                cssProcessorOptions: {
-                    map: {
-                        // 不生成内联映射,这样配置就会生成一个source-map文件
-                        inline: false,
-                        // 向css文件添加source-map路径注释
-                        // 如果没有此项压缩后的css会去除source-map路径注释
-                        annotation: true
-                    }
-                }
+                assetNameRegExp: /\.optimize\.css$/g,
+                cssProcessor: require('cssnano'),
+                cssProcessorPluginOptions: {
+                    preset: ['default', {
+                        discardComments: {
+                            removeAll: true
+                        }
+                    }],
+                },
+                canPrint: true
             }),
         )
     } else {
