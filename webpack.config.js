@@ -12,6 +12,8 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 const TerserJSPlugin = require("terser-webpack-plugin")
 //检查打包问题大小
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+//cdn
+const WebpackCdnPlugin = require('webpack-cdn-plugin');
 //webpack 只接受两个参数 env环境 argv参数
 module.exports = (env, argv) => {
     console.log(env)
@@ -22,6 +24,54 @@ module.exports = (env, argv) => {
             template: path.resolve(__dirname, "src/views/index.html"),
             cdnModule: 'vue',
             title: "Vue Pages",
+        }),
+        new BundleAnalyzerPlugin(),
+        new WebpackCdnPlugin({
+            prodUrl: "https://cdn.bootcss.com/:name/:version/:path",
+            modules: {
+                'vue': [{
+                        name: 'nprogress',
+                        var: 'NProgress',
+                        path: 'nprogress.min.js',
+                        style: "nprogress.min.css",
+                        version: "0.2.0"
+                    }, {
+                        name: 'js-cookie',
+                        var: 'Cookies',
+                        path: 'js.cookie.min.js',
+                        version: "2.2.0"
+                    }, {
+                        name: 'axios',
+                        var: 'axios',
+                        path: 'axios.min.js',
+                        version: "0.18.0"
+                    }, {
+                        name: 'vue',
+                        var: 'Vue',
+                        path: 'vue.min.js',
+                        version: "2.6.10"
+                    }, {
+                        name: 'vue-router',
+                        var: 'Router',
+                        path: 'vue-router.min.js',
+                        version: "3.0.6"
+                    },
+                    {
+                        name: 'vuex',
+                        var: 'Vuex',
+                        path: 'vuex.min.js',
+                        version: "3.1.0"
+                    },
+                    {
+                        name: 'element-ui',
+                        var: 'ELEMENT',
+                        path: 'index.js',
+                        style: "theme-chalk/index.css",
+                        version: "2.6.10"
+                    }
+                ],
+            },
+            publicPath: '/node_modules'
         })
     ];
     let optimization = {
@@ -62,7 +112,6 @@ module.exports = (env, argv) => {
                 filename: devMode ? 'static/css/[name].min.css' : 'static/css/[hash].min.css',
                 //     chunkFilename: devMode ? 'static/js/[name]_chunk.min.css' : 'static/js/[hash]_chunk.min.css',
             }),
-            new BundleAnalyzerPlugin()
         )
         //production
         optimization.minimizer.push(
@@ -92,7 +141,9 @@ module.exports = (env, argv) => {
         mode: devMode ? 'development' : 'production',
         devtool: devMode ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
         entry: {
-            app: path.resolve(__dirname, "src/app.js")
+            admin: path.resolve(__dirname, "src/pages/admin/entry.js"),
+            // index: path.resolve(__dirname, "src/pages/index/entry.js"),
+            // app: path.resolve(__dirname, "src/pages/app/entry.js")
             // web: path.resolve(__dirname, "src/web.js")
         },
         output: {
@@ -110,12 +161,19 @@ module.exports = (env, argv) => {
         performance: {
             hints: false
         },
+        externals: {
+            'js-cookie': 'Cookies',
+            'vue': 'Vue',
+            'vue-router': 'Router',
+            'axios': 'axios',
+            'element-ui': 'ELEMENT',
+        },
         resolve: {
             alias: {
                 vue$: "vue/dist/vue.esm.js",
                 '@': path.resolve('src')
             },
-            // extensions: [".mjs", ".js", ".vue", ".json"]
+            extensions: [".mjs", ".js", ".vue", ".json"]
         },
         module: {
             rules: [{

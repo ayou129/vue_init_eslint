@@ -1,19 +1,15 @@
 <template lang="html">
     <div :class="$style.app">
-        test测试
+        index 测试
     </div>
 </template>
 
 <script>
-export default {
-    components: {
-    }
-}
+export default {}
 </script>
 
 <style lang="scss" scoped module>
 .app {
-    color: green;
-    font-size: 50px;
+    color: yellow;
 }
 </style>
