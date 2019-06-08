@@ -6,8 +6,12 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "build": "webpack --env production --config webpack.config.js",
-        "pro": "webpack-dev-server --env=production --open --config webpack.config.js --progress --colors",
-        "dev": "webpack-dev-server --env=development --open --config webpack.config.js --progress --colors"
+        "proapp": "webpack-dev-server --env=production --open --config webpack.app.config.js --progress --colors",
+        "devapp": "webpack-dev-server --env=development --open --config webpack.app.config.js --progress --colors",
+        "proadmin": "webpack-dev-server --env=production --open --config webpack.admin.config.js --progress --colors",
+        "devadmin": "webpack-dev-server --env=development --open --config webpack.admin.config.js --progress --colors",
+        "proweb": "webpack-dev-server --env=production --open --config webpack.web.config.js --progress --colors",
+        "devweb": "webpack-dev-server --env=development --open --config webpack.web.config.js --progress --colors"
     },
     "author": "lee129",
     "license": "ISC",
@@ -43,8 +47,12 @@
     },
     "dependencies": {
         "axios": "^0.18.0",
-        "element-ui": "^2.8.2",
+        "element-ui": "^2.8.1",
+        "normalize.css": "^8.0.0",
+        "nprogress": "^0.2.0",
         "vue": "^2.6.10",
+        "vue-downloader": "^1.0.3",
+        "vue-moment": "^4.0.0",
         "vue-router": "^3.0.6",
         "vue-video-player": "^5.0.2",
         "vuex": "^3.1.1"

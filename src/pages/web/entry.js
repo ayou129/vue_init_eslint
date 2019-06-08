@@ -3,7 +3,6 @@ import Entry from './Entry.vue';
 import store from './store.js';
 import router from './router.js';
 // import './plugins/element.js'
-import '@/utils/viewport.js'
 new Vue({
     store,
     router,

@@ -21,53 +21,53 @@ module.exports = (env, argv) => {
     let plugins = [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, "src/views/index.html"),
+            template: path.resolve(__dirname, "src/pages/web/template.html"),
             cdnModule: 'vue',
-            title: "Vue Pages",
+            title: "Web",
         }),
-        new BundleAnalyzerPlugin(),
+        // new BundleAnalyzerPlugin(),
         new WebpackCdnPlugin({
             prodUrl: "https://cdn.bootcss.com/:name/:version/:path",
             modules: {
                 'vue': [{
+                        name: 'normalize.css',
+                        style: 'normalize.min.css',
+                        cssOnly: true,
+                        prodUrl: "https://cdn.bootcss.com/normalize/:version/:path",
+                    }, {
                         name: 'nprogress',
                         var: 'NProgress',
                         path: 'nprogress.min.js',
                         style: "nprogress.min.css",
-                        version: "0.2.0"
                     }, {
                         name: 'js-cookie',
                         var: 'Cookies',
                         path: 'js.cookie.min.js',
-                        version: "2.2.0"
                     }, {
                         name: 'axios',
                         var: 'axios',
                         path: 'axios.min.js',
-                        version: "0.18.0"
-                    }, {
+                    },
+                    {
                         name: 'vue',
                         var: 'Vue',
                         path: 'vue.min.js',
-                        version: "2.6.10"
-                    }, {
+                    },
+                    {
                         name: 'vue-router',
                         var: 'Router',
                         path: 'vue-router.min.js',
-                        version: "3.0.6"
                     },
                     {
                         name: 'vuex',
                         var: 'Vuex',
                         path: 'vuex.min.js',
-                        version: "3.1.0"
                     },
                     {
                         name: 'element-ui',
                         var: 'ELEMENT',
                         path: 'index.js',
                         style: "theme-chalk/index.css",
-                        version: "2.6.10"
                     }
                 ],
             },
@@ -141,10 +141,7 @@ module.exports = (env, argv) => {
         mode: devMode ? 'development' : 'production',
         devtool: devMode ? 'cheap-module-eval-source-map' : 'cheap-module-source-map',
         entry: {
-            admin: path.resolve(__dirname, "src/pages/admin/entry.js"),
-            // index: path.resolve(__dirname, "src/pages/index/entry.js"),
-            // app: path.resolve(__dirname, "src/pages/app/entry.js")
-            // web: path.resolve(__dirname, "src/web.js")
+            admin: path.resolve(__dirname, "src/pages/web/entry.js"),
         },
         output: {
             path: path.resolve(process.cwd(), 'dist'),
@@ -153,7 +150,7 @@ module.exports = (env, argv) => {
         },
         devServer: {
             hot: true,
-            port: 8080,
+            port: 9001,
             historyApiFallback: true
         },
         plugins,

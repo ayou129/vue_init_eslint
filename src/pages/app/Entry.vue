@@ -1,19 +1,22 @@
 <template lang="html">
-    <div :class="$style.app">
-        test测试
+    <div :class="$style.test">
+        123
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {}
+    },
     components: {
     }
 }
 </script>
 
 <style lang="scss" scoped module>
-.app {
-    color: green;
-    font-size: 50px;
+.test{
+    color: red;
+    font-size: 700px;
 }
 </style>
